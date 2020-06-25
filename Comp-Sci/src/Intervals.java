@@ -8,12 +8,35 @@ import java.util.Scanner;
 
 public class Intervals {
 
-    public static int timeConverter(String stringTime) {
+    public static int octalConverter(String stringTime) {
+        //Used to avoid octal numbers with integers starting with 0
         while (stringTime.indexOf("0") == 0) {
             stringTime = stringTime.substring(1);
         }
+        if (stringTime.equals("")) { // Makes 0000 = 2400 instead
+            stringTime = "2400";
+        }
         int time = Integer.parseInt(stringTime);
         return time;
+    }
+
+    public static int timeDifference(int time1, int time2) {
+        //Modulate them here
+        int interval = 0;
+
+        if (time1 < time2) {
+            interval = (2400 - time1) - (2400 - time2);
+        }
+        else if (time1 > time2) {
+            interval = (2400 - time1) + time2;
+        }
+        else if (time1 == time2) {
+            interval = 2400;
+        }
+        else {
+            System.out.println("Error, input times are not valid");
+        }
+        return interval;
     }
 
     public static void main(String[] args) {
@@ -30,17 +53,17 @@ public class Intervals {
         String strEndTime2 = input.next();
 
         //Converts Time to avoid Octal numbers
-        int startTime1 = timeConverter(strStartTime1);
-        int startTime2 = timeConverter(strStartTime1);
-        int endTime1 = timeConverter(strStartTime1);
-        int endTime2 = timeConverter(strStartTime1);
+        int startTime1 = octalConverter(strStartTime1);
+        int startTime2 = octalConverter(strStartTime2);
+        int endTime1 = octalConverter(strEndTime1);
+        int endTime2 = octalConverter(strEndTime2);
 
+        // Finds time difference and calculates time interval
+        int interval1 = timeDifference(startTime1, endTime1);
+        int interval2 = timeDifference(startTime2, endTime2);
 
-
-        System.out.println(timeConverter(strStartTime1));
-        System.out.println(timeConverter(strEndTime1));
-
-
+        System.out.println(interval1);
+        System.out.println(interval2);
 
     }
 }
