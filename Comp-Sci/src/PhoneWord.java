@@ -63,5 +63,6 @@ public class PhoneWord {
         phoneNumber.insert(3, '-');
 
         System.out.println("Your number is: " + phoneNumber);
+
     }
 }
