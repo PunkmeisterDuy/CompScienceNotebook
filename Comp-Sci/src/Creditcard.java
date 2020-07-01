@@ -1,7 +1,7 @@
 /*
  * Duy Nguyen
  * Creditcard.java
- * Takes input of credit card and returns validity
+ * Takes input of credit card and returns validity/type
  */
 
 import com.sun.source.doctree.SummaryTree;
@@ -76,10 +76,10 @@ public class Creditcard {
     // Formats validity into string
     public static String isValidFormatter(long card) {
         if (isValid(card)) {
-            return "Valid";
+            return "valid";
         }
         else {
-            return "Invalid";
+            return "invalid";
         }
     }
 
@@ -90,7 +90,7 @@ public class Creditcard {
         return number;
     }
 
-    // Determines if double digit and then adds sum
+    // Sums the sum of double even place using getDoubledDigitSum()
     public static long sumOfDoubleEvenPlace(long card) {
         int sum = 0;
         int digits = getSize(card);
@@ -106,6 +106,7 @@ public class Creditcard {
         return totalSum;
     }
 
+    // Determines if double digit and then adds sum
     public static long getDoubledDigitSum(int digit) {
         int sum = 0;
         if (digit >= 10) {
@@ -129,13 +130,15 @@ public class Creditcard {
 
     public static void main(String[] args) {
 
+        // Takes input
         Scanner input = new Scanner(System.in);
         System.out.print("Enter credit card number: ");
         long card = input.nextLong();
 
+        // Checks for card type and if valid
         String cardType = cardIdentifier(card);
         String valid = isValidFormatter(card);
 
-        System.out.printf("That is a %s %s card number.\n", valid, cardType);
+        System.out.printf("This is a %s %s card number.\n", valid, cardType);
     }
 }
