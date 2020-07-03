@@ -11,15 +11,17 @@ public class LockerPuzzle {
 
         final int NUMLOCKERS = lockers.length;
 
+        // Initializes each locker as closed
         for (int i = 0; i < NUMLOCKERS; i++) {
             lockers[i] = false;
         }
 
         // For every locker: student will negate locker status
-        //      Index = 1 and <= Number of lockers to avoid infinite loops
         for (int lockerIdx = 1; lockerIdx <= NUMLOCKERS; lockerIdx++) {
 
-            for (int studentIdx = 1; (lockerIdx * studentIdx - 1 < NUMLOCKERS); studentIdx++) {
+            for (int studentIdx = 1;
+                 (lockerIdx * studentIdx - 1 < NUMLOCKERS);
+                 studentIdx++) {
 
                 lockers[lockerIdx * studentIdx - 1] = !lockers[lockerIdx * studentIdx - 1];
             }
@@ -34,5 +36,6 @@ public class LockerPuzzle {
                 System.out.printf("\nLocker %d is closed", i + 1);
             }
         }
+
     }
 }
