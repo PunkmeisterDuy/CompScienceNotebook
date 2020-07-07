@@ -10,33 +10,51 @@ public class MergeTest {
 
         int listLength = list1.length + list2.length;
 
-        int[] list3 = new int[listLength];
+        int[] resultList = new int[listLength];
 
-        int i = 0;
+        int list1Idx = 0;
+        int list2Idx = 0;
 
-        while (i < 100){
-            if (list1[i] > list2[i]) {
-                list3[i] = list1[i];
+        for (int i = 0; i < listLength; i++) {
+
+            if ((list1Idx < list1.length) && (list2Idx < list2.length)) {
+
+                int item1 = list1[list1Idx];
+                int item2 = list2[list2Idx];
+
+                if (item1 < item2) {
+                    resultList[i] = item1;
+                    list1Idx++;
+                } else if (item1 > item2) {
+                    resultList[i] = item2;
+                    list2Idx++;
+                } else {
+                    // defaults to list 1 if equal
+                    resultList[i] = item1;
+                    list1Idx++;
+                }
             }
-            else if (list1[i] < list2[i]) {
-                list3[i] = list2[i];
+            else if (list1Idx >= list1.length) {
+                resultList[i] = list2[list2Idx];
+                list2Idx++;
             }
-            else {
-                list3[i] = list1[i];
-                list3[i] = list2[i];
+            else if (list2Idx >= list2.length) {
+                resultList[i] = list1[list1Idx];
+                list1Idx++;
             }
         }
-
-
-        return list3;
+        return resultList;
     }
 
     public static void main(String[] args) {
 
         int[] list1 = {1, 2, 3, 4, 5};
-        int[] list2 = {6, 7, 8, 9 , 10};
+        int[] list2 = {5, 6, 7, 8, 9 , 10};
+        int[] list3 = merge(list1, list2);
 
-        System.out.println(merge(list1, list2));
+        for (int i = 0; i < list3.length; i++) {
+            System.out.println(list3[i]);
+        }
 
     }
 }
