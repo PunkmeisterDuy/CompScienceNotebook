@@ -1,7 +1,7 @@
 /*
  * Duy Nguyen
  * MatrixMult.java
- * Multiplies two matrices together
+ * Multiplies two matrices together and returns Matrix C
  */
 
 import java.util.Scanner;
@@ -25,6 +25,7 @@ public class MatrixMult {
         System.out.print("Enter contents by row: ");
         for (int i = 0; i < matrixRows; i++) {
             for (int j = 0; j < matrixColumns; j++) {
+
                 matrix[i][j] = input.nextDouble();
             }
         }
@@ -34,14 +35,17 @@ public class MatrixMult {
     }
 
     public static double[][] multiplyMatrix(double[][] matrixA,
-                                            double[][] matrixB,
-                                            double[][] matrixC) {
+                                            double[][] matrixB) {
+        // Initializes matrix based off matrix A and B dimensions
+        double[][] matrixC =
+                new double[matrixA.length][matrixB[0].length];
 
         // Multiplies matrix elements together into output matrix
 
         for (int Bj = 0; Bj < matrixB[0].length; Bj++)
             for (int Ai = 0; Ai < matrixA.length; Ai++) {
                 for (int Aj = 0; Aj < matrixA[0].length; Aj++) {
+
                     matrixC[Ai][Bj] += matrixA[Ai][Aj] * matrixB[Aj][Bj];
                 }
             }
@@ -61,7 +65,6 @@ public class MatrixMult {
             }
             System.out.println();
         }
-        System.out.println();
     }
 
     public static void main(String[] args) {
@@ -75,10 +78,7 @@ public class MatrixMult {
         // Checks if matrices are valid
         if (matrixA[0].length == matrixB.length) {
 
-            double[][] matrixC =
-                    new double[matrixA.length][matrixB[0].length];
-
-            matrixC = multiplyMatrix(matrixA, matrixB, matrixC);
+            double[][] matrixC = multiplyMatrix(matrixA, matrixB);
 
             matrixOutput(matrixC);
         }
