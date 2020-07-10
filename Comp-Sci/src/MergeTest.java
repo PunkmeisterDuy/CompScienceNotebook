@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 public class MergeTest {
 
+    // Merges list1 and list2 into sorted list
     public static int[] merge(int[] list1, int[] list2) {
 
         int list1Length = list1.length;
@@ -17,42 +18,33 @@ public class MergeTest {
 
         int[] resultList = new int[listLength];
 
-        int list1Idx = 0;
-        int list2Idx = 0;
+        int list1Index = 0;
+        int list2Index = 0;
+        int resultIndex = 0;
 
-        for (int i = 0; i < listLength; i++) {
+        while ((list1Index < list1Length) && (list2Index < list2Length)) {
 
-            if ((list1Idx < list1Length) && (list2Idx < list2Length)) {
-
-                int item1 = list1[list1Idx];
-                int item2 = list2[list2Idx];
-                // Isn't initialized before to avoid out of index error
-
-                if (item1 < item2) {
-                    resultList[i] = item1;
-                    list1Idx++;
-                } else if (item1 > item2) {
-                    resultList[i] = item2;
-                    list2Idx++;
-                } else {
-                    // defaults to list 1 if equal
-                    resultList[i] = item1;
-                    list1Idx++;
-                }
-            }
-            else if (list1Idx >= list1Length) {
-                resultList[i] = list2[list2Idx];
-                list2Idx++;
+            if (list1[list1Index] <= list2[list2Index]) {
+                resultList[resultIndex++] = list1[list1Index++];
             }
             else {
-                resultList[i] = list1[list1Idx];
-                list1Idx++;
+                resultList[resultIndex++] = list2[list2Index++];
             }
         }
+
+        while (list1Index < list1Length) {
+            resultList[resultIndex++] = list1[list1Index++];
+        }
+
+        while (list2Index < list2Length) {
+            resultList[resultIndex++] = list2[list2Index++];
+        }
+
         return resultList;
     }
 
-    public static int[] input(String listName, Scanner input) {
+    // Takes input of list size and elements
+    public static int[] inputList(String listName, Scanner input) {
 
         System.out.printf("Enter size of %s: ", listName);
         int listSize = input.nextInt();
@@ -62,11 +54,14 @@ public class MergeTest {
         for (int i = 0; i < listSize; i++) {
             list[i] = input.nextInt();
         }
+
         return list;
     }
 
-    public static void output(int[] resultList) {
-        System.out.print("The merged list is:");
+    // Outputs list name and elements
+    public static void outputList(String listName, int[] resultList) {
+
+        System.out.printf("%s is: ", listName);
 
         for (int i = 0; i < resultList.length; i++) {
             System.out.print(" " + resultList[i]);
@@ -79,13 +74,15 @@ public class MergeTest {
         Scanner input = new Scanner(System.in);
 
         // Takes input for list1 and list2
-        int[] list1 = input("list 1", input);
-        int[] list2 = input("list 2", input);
+        int[] list1 = inputList("list 1", input);
+        int[] list2 = inputList("list 2", input);
 
         // Sorts/merges list1 and list2
         int[] resultList = merge(list1, list2);
 
         // Outputs readable list
-        output(resultList);
+        outputList("List 1", list1);
+        outputList("List 2", list2);
+        outputList("Merged list", resultList);
     }
 }

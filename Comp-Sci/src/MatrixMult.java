@@ -53,11 +53,11 @@ public class MatrixMult {
         return(matrixC);
     }
 
-    public static void matrixOutput(double[][] matrix) {
+    public static void matrixOutput(String matrixName, double[][] matrix) {
 
         // Outputs matrix in readable form
 
-        System.out.println("Matrix C is: ");
+        System.out.printf("%s is: \n", matrixName);
 
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
@@ -80,7 +80,7 @@ public class MatrixMult {
 
             double[][] matrixC = multiplyMatrix(matrixA, matrixB);
 
-            matrixOutput(matrixC);
+            matrixOutput("Matrix C", matrixC);
         }
         else {
             System.out.println("The matrices are not compatible, " +
