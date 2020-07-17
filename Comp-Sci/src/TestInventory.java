@@ -6,15 +6,15 @@
 
 class InventoryItem {
 
-    String itemName;
-    int sku;
-    double price;
-    int quantity;
-    static int nItems = 0;
+    private String itemName;
+    private int sku;
+    private double price;
+    private int quantity;
+    private static int nItems = 0;
 
     // Constructs objects' properties
     public InventoryItem() {
-        String itemName = "TBD";
+        itemName = "TBD";
         int sku = 0;
         double price = 0.0;
         int quantity = 0;
