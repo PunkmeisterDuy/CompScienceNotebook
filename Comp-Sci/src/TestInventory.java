@@ -10,7 +10,7 @@ class InventoryItem {
     private int sku;
     private double price;
     private int quantity;
-    private static int nItems = 0;
+    private static int nItems;
 
     // Constructs objects' properties
     public InventoryItem() {
