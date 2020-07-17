@@ -6,29 +6,25 @@
 
 class InventoryItem {
 
-    private String itemName;
-    private int sku;
-    private double price;
-    private int quantity;
+    private String itemName = "TBD";
+    private int sku = 0;
+    private double price = 0.0;
+    private int quantity = 0;
     private static int nItems;
 
     // Constructs objects' properties
-    public InventoryItem() {
-        itemName = "TBD";
-        int sku = 0;
-        double price = 0.0;
-        int quantity = 0;
-        nItems += 1;
-    }
-    public InventoryItem(String itemName, int sku, double price) {
-        this();
+    public InventoryItem(String itemName, int sku, double price, int quantity) {
         this.itemName = itemName;
         this.sku = Math.abs(sku);
         this.price = Math.abs(price);
-    }
-    public InventoryItem(String itemName, int sku, double price, int quantity) {
-        this(itemName, sku, price);
         this.quantity = Math.abs(quantity);
+        nItems += 1;
+    }
+    public InventoryItem(String itemName, int sku, double price) {
+        this(itemName, sku, price, 0);
+    }
+    public InventoryItem() {
+        this("TBD", 0, 0.0, 0);
     }
 
     // Gets items' properties
