@@ -12,6 +12,7 @@ class InventoryItem {
     int quantity;
     static int nItems = 0;
 
+    // Constructs objects' properties
     public InventoryItem() {
         String itemName = "TBD";
         int sku = 0;
@@ -30,6 +31,7 @@ class InventoryItem {
         this.quantity = Math.abs(quantity);
     }
 
+    // Gets items' properties
     public String getItemName() {
         return(itemName);
     }
@@ -49,6 +51,7 @@ class InventoryItem {
         return(price * quantity);
     }
 
+    // Sets items' properties
     public void setItemName(String itemName) {
         this.itemName = itemName;
     }
@@ -62,6 +65,7 @@ class InventoryItem {
         this.quantity = Math.abs(quantity);
     }
 
+    // Displays Item name, SKU, Price, and quantity
     public void display() {
         System.out.printf("Item Name: %s\n" +
                             "SKU: %d\n" +
@@ -74,6 +78,7 @@ class InventoryItem {
         System.out.printf("Total value: $%.2f\n\n", getTotalValue());
     }
 
+    // Compares 2 items' total values and returns -1, 0, and 1
     public static int compare(InventoryItem item1, InventoryItem item2) {
 
         double value1 = item1.getTotalValue();
@@ -90,6 +95,7 @@ class InventoryItem {
         }
     }
 
+    // Displays output based off compare function
     public static void displayCompare(InventoryItem item1, InventoryItem item2) {
 
         String name1 = item1.itemName;
@@ -114,6 +120,7 @@ public class TestInventory {
 
     public static void main(String[] args) {
 
+        // Declares/Initializes objects
         InventoryItem emptyItem = new InventoryItem();
         InventoryItem staplers = new InventoryItem("Stapler, Red",
                                                 91745, 7.89);
@@ -121,6 +128,8 @@ public class TestInventory {
                                                 73105, 0.35, 210);
         InventoryItem notebooks = new InventoryItem("Notebook, Spiral",
                                                 68332, 2.57, 38);
+
+        // Displays items' properties NItems and comparison
 
         System.out.printf("Number of inventory items: %d\n\n",
                             InventoryItem.getNItems());
