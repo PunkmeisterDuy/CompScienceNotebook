@@ -1,23 +1,22 @@
 /*
  * Duy Nguyen
  * TestInventory.java
- * Takes inventory of items' name, sku, price, and etc.
+ * Takes inventory of items' name, sku, price, and etc with various methods.
  */
 
 class InventoryItem {
 
     String itemName;
     int sku;
-    double price = 0.0;
-    int quantity = 0;
-
+    double price;
+    int quantity;
     static int nItems = 0;
 
     public InventoryItem() {
-        itemName = "TBD";
-        sku = 0;
-        price = 0.0;
-        quantity = 0;
+        String itemName = "TBD";
+        int sku = 0;
+        double price = 0.0;
+        int quantity = 0;
         nItems += 1;
     }
     public InventoryItem(String itemName, int sku, double price) {
@@ -91,6 +90,24 @@ class InventoryItem {
         }
     }
 
+    public static void displayCompare(InventoryItem item1, InventoryItem item2) {
+
+        String name1 = item1.itemName;
+        String name2 = item2.itemName;
+
+        switch(InventoryItem.compare(item1, item2)) {
+            case -1:
+                System.out.printf("%s has less value than %s\n", name1, name2);
+                break;
+            case 0:
+                System.out.printf("%s has the same value as %s\n", name1, name2);
+                break;
+            case 1:
+                System.out.printf("%s has the greater value than %s\n", name1, name2);
+                break;
+        }
+    }
+
 }
 
 public class TestInventory {
@@ -103,7 +120,7 @@ public class TestInventory {
         InventoryItem pencils = new InventoryItem("Pencil, #2",
                                                 73105, 0.35, 210);
         InventoryItem notebooks = new InventoryItem("Notebook, Spiral",
-                                                68332, 0.35, 38);
+                                                68332, 2.57, 38);
 
         System.out.printf("Number of inventory items: %d\n\n",
                             InventoryItem.getNItems());
@@ -120,21 +137,7 @@ public class TestInventory {
         notebooks.display();
         notebooks.displayTotalValue();
 
-
-        String name1 = pencils.itemName;
-        String name2 = notebooks.itemName;
-
-        switch(InventoryItem.compare(pencils, notebooks)) {
-            case -1:
-                System.out.printf("%s has less value than %s", name1, name2);
-                break;
-            case 0:
-                System.out.printf("%s has the same value as %s", name1, name2);
-                break;
-            case 1:
-                System.out.printf("%s has the greater value than %s", name1, name2);
-                break;
-        }
+        InventoryItem.displayCompare(pencils,notebooks);
 
     }
 }
