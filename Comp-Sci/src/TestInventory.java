@@ -4,18 +4,19 @@
  * Takes inventory of items' name, sku, price, and etc with various methods.
  */
 
+// Creates object based off name, sku, price, and quantity
 class InventoryItem {
 
-    private String itemName = "TBD";
-    private int sku = 0;
-    private double price = 0.0;
-    private int quantity = 0;
+    private String itemName;
+    private int sku;
+    private double price;
+    private int quantity;
     private static int nItems;
 
     // Constructs objects' properties
     public InventoryItem(String itemName, int sku, double price, int quantity) {
         this.itemName = itemName;
-        this.sku = Math.abs(sku);
+        this.sku = sku;
         this.price = Math.abs(price);
         this.quantity = Math.abs(quantity);
         nItems += 1;
@@ -29,22 +30,22 @@ class InventoryItem {
 
     // Gets items' properties
     public String getItemName() {
-        return(itemName);
+        return itemName;
     }
     public int getSku() {
-        return(sku);
+        return sku;
     }
     public double getPrice() {
-        return(price);
+        return price;
     }
     public int getQuantity() {
-        return(quantity);
+        return quantity;
     }
     public static int getNItems() {
-        return(nItems);
+        return nItems;
     }
     public double getTotalValue() {
-        return(price * quantity);
+        return price * quantity;
     }
 
     // Sets items' properties
@@ -52,7 +53,7 @@ class InventoryItem {
         this.itemName = itemName;
     }
     public void setSku(int sku) {
-        this.sku = Math.abs(sku);
+        this.sku = sku;
     }
     public void setPrice(double price) {
         this.price = Math.abs(price);
@@ -79,33 +80,40 @@ class InventoryItem {
 
         double value1 = item1.getTotalValue();
         double value2 = item2.getTotalValue();
+        int comparison;
 
         if (value1 < value2) {
-            return(-1);
+            comparison = -1;
         }
         else if (value1 == value2) {
-            return(0);
+            comparison = 0;
         }
         else {
-            return(1);
+            comparison = 1;
         }
+
+        return comparison;
     }
 
     // Displays output based off compare function
-    public static void displayCompare(InventoryItem item1, InventoryItem item2) {
+    public static void displayCompare(InventoryItem item1,
+                                      InventoryItem item2) {
 
         String name1 = item1.itemName;
         String name2 = item2.itemName;
 
-        switch(InventoryItem.compare(item1, item2)) {
+        switch (InventoryItem.compare(item1, item2)) {
             case -1:
-                System.out.printf("%s has less value than %s\n", name1, name2);
+                System.out.printf("%s has less value than %s\n",
+                        name1, name2);
                 break;
             case 0:
-                System.out.printf("%s has the same value as %s\n", name1, name2);
+                System.out.printf("%s has the same value as %s\n",
+                        name1, name2);
                 break;
             case 1:
-                System.out.printf("%s has the greater value than %s\n", name1, name2);
+                System.out.printf("%s has the greater value than %s\n",
+                        name1, name2);
                 break;
         }
     }
@@ -142,7 +150,7 @@ public class TestInventory {
         notebooks.display();
         notebooks.displayTotalValue();
 
-        InventoryItem.displayCompare(pencils,notebooks);
+        InventoryItem.displayCompare(pencils, notebooks);
 
     }
 }
