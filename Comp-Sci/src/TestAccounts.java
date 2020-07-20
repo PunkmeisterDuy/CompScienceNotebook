@@ -1,14 +1,16 @@
 /*
  * Duy Nguyen
  * TestAccounts.java
- * Records accounts with various functions for accounting
+ * Creates various accounts with functions for accounting
  */
 
+// Creates base account
 class Account {
 
     private long number;
     private double balance;
 
+    // Constructs object with number and balance
     public Account(long number, double balance) {
         this.number = number;
         this.balance = balance;
@@ -17,6 +19,7 @@ class Account {
         this(0, 0);
     }
 
+    // Getters/setters
     public long getNumber() {
         return number;
     }
@@ -27,6 +30,7 @@ class Account {
         this.balance = balance;
     }
 
+    // Functions for depositing/withdrawing/formatting
     public void deposit(double amount) {
         if (amount >= 0) {
             balance  += amount;
@@ -44,10 +48,12 @@ class Account {
 
 }
 
+// Creates a savings account inherited from account
 class SavingsAccount extends Account {
 
     private double apr;
 
+    // Constructs object from inheritor including apr
     public SavingsAccount(long number, double balance, double apr) {
         super(number, balance);
         this.apr = apr;
@@ -56,6 +62,7 @@ class SavingsAccount extends Account {
         this(0, 0, 0);
     }
 
+    // Getters/setters
     public double getApr() {
         return apr;
     }
@@ -63,6 +70,7 @@ class SavingsAccount extends Account {
         this.apr = apr;
     }
 
+    // Functions for calculating interest/formatting
     public double calculateInterest() {
         return getBalance() * apr;
     }
@@ -74,14 +82,15 @@ class SavingsAccount extends Account {
 
 }
 
+// Creates a Credit card account inherited from account
 class CreditCardAccount extends Account {
 
     private double apr;
     private double creditLimit;
 
+    // Constructs object from inheritor including apr/credit limit
     public CreditCardAccount(long number, double balance,
                              double apr, double creditLimit) {
-
         super(number, balance);
         this.apr = apr;
         this.creditLimit = creditLimit;
@@ -90,6 +99,7 @@ class CreditCardAccount extends Account {
         this(0, 0, 0, 0);
     }
 
+    // Getters/setters
     public double getApr() {
         return apr;
     }
@@ -103,19 +113,7 @@ class CreditCardAccount extends Account {
         this.apr = apr;
     }
 
-    public String toString() {
-        return "\n" + super.toString() +
-                String.format("\nInterest Rate: %.2f%%", apr * 100) +
-                String.format("\nCredit Limit: $%.2f", creditLimit) +
-                String.format("\nMonthly Payment: $%.2f", calculatePayment());
-    }
-    public void withdraw(double amount) {
-        if (creditLimit + getBalance() >= amount) {
-            setBalance(getBalance() - amount);
-        }
-    }
     public double calculatePayment() {
-
         double payment = 0;
 
         if (getBalance() < 0) {
@@ -123,12 +121,24 @@ class CreditCardAccount extends Account {
         }
         return payment;
     }
-
+    public void withdraw(double amount) {
+        if (creditLimit + getBalance() >= amount) {
+            setBalance(getBalance() - amount);
+        }
+    }
+    public String toString() {
+        return "\n" + super.toString() +
+                String.format("\nInterest Rate: %.2f%%", apr * 100) +
+                String.format("\nCredit Limit: $%.2f", creditLimit) +
+                String.format("\nMonthly Payment: $%.2f", calculatePayment());
+    }
 }
 
+// Test all accounts objects
 public class TestAccounts {
     public static void main(String[] args) {
 
+        // Creates array of accounts
         Account accounts[] = new Account[5];
 
         accounts[0] = new Account(1066, 7500);
@@ -137,6 +147,7 @@ public class TestAccounts {
         accounts[3] = new CreditCardAccount(629553328, 1500, .075, 5000);
         accounts[4] = new CreditCardAccount(4977201043L, -5000, .07, 10000);
 
+        // Deposits/withdraws amounts and prints from all objects in array
         for (int i = 0; i < accounts.length; i++) {
 
             accounts[i].deposit(2134);
