@@ -76,8 +76,7 @@ class SavingsAccount extends Account {
     }
     public String toString() {
         return "\n" + super.toString() +
-                String.format("\nInterest Rate: %.2f%%", apr * 100) +
-                String.format("\nAnnual Interest: $%.2f", calculateInterest());
+                String.format("\nInterest Rate: %.2f%%", apr * 100);
     }
 
 }
@@ -130,8 +129,7 @@ class CreditCardAccount extends Account {
     public String toString() {
         return "\n" + super.toString() +
                 String.format("\nInterest Rate: %.2f%%", apr * 100) +
-                String.format("\nCredit Limit: $%.2f", creditLimit) +
-                String.format("\nMonthly Payment: $%.2f", calculatePayment());
+                String.format("\nCredit Limit: $%.2f", creditLimit);
     }
 }
 
@@ -155,6 +153,16 @@ public class TestAccounts {
             accounts[i].withdraw(4782);
 
             System.out.print(accounts[i]);
+
+            if (accounts[i] instanceof SavingsAccount) {
+                System.out.printf("\nInterest: $%.2f",
+                        ((SavingsAccount) accounts[i]).calculateInterest());
+            }
+            else if (accounts[i] instanceof CreditCardAccount) {
+                System.out.printf("\nMonthly Payment: $%.2f",
+                        ((CreditCardAccount) accounts[i]).calculatePayment());
+            }
+
             System.out.println();
         }
     }
