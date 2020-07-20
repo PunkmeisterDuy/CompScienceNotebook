@@ -11,12 +11,12 @@ class Account {
     private double balance;
 
     // Constructs object with number and balance
+    public Account() {
+        this(0L, 0.0);
+    }
     public Account(long number, double balance) {
         this.number = number;
         this.balance = balance;
-    }
-    public Account() {
-        this(0, 0);
     }
 
     // Getters/setters
@@ -36,11 +36,14 @@ class Account {
             balance  += amount;
         }
     }
+
     public void withdraw(double amount) {
         if ((amount >= 0) && (amount <= balance)){
             balance  -= amount;
         }
     }
+
+    @Override
     public String toString() {
         return String.format("Account Number: %d", number) +
                 String.format("\nBalance: $%.2f", balance);
@@ -54,12 +57,12 @@ class SavingsAccount extends Account {
     private double apr;
 
     // Constructs object from inheritor including apr
+    public SavingsAccount() {
+        this(0L, 0.0, 0.0);
+    }
     public SavingsAccount(long number, double balance, double apr) {
         super(number, balance);
         this.apr = apr;
-    }
-    public SavingsAccount() {
-        this(0, 0, 0);
     }
 
     // Getters/setters
@@ -67,13 +70,17 @@ class SavingsAccount extends Account {
         return apr;
     }
     public void setApr(double apr) {
-        this.apr = apr;
+        if (apr > 0) {
+            this.apr = apr;
+        }
     }
 
     // Functions for calculating interest/formatting
     public double calculateInterest() {
         return getBalance() * apr;
     }
+
+    @Override
     public String toString() {
         return "\n" + super.toString() +
                 String.format("\nInterest Rate: %.2f%%", apr * 100);
@@ -88,14 +95,14 @@ class CreditCardAccount extends Account {
     private double creditLimit;
 
     // Constructs object from inheritor including apr/credit limit
+    public CreditCardAccount() {
+        this(0L, 0.0, 0.0, 0);
+    }
     public CreditCardAccount(long number, double balance,
                              double apr, double creditLimit) {
         super(number, balance);
         this.apr = apr;
         this.creditLimit = creditLimit;
-    }
-    public CreditCardAccount() {
-        this(0, 0, 0, 0);
     }
 
     // Getters/setters
@@ -109,23 +116,30 @@ class CreditCardAccount extends Account {
         this.creditLimit = creditLimit;
     }
     public void setApr(double apr) {
-        this.apr = apr;
+        if (apr > 0) {
+            this.apr = apr;
+        }
     }
 
     // Functions for calculating payment/withdrawing/formatting
     public double calculatePayment() {
-        double payment = 0;
+        double payment = 0.0;
 
         if (getBalance() < 0) {
-            payment = Math.min(20, apr / 12 * Math.abs(getBalance()));
+            payment = Math.min(20, (apr / 12) * -getBalance());
         }
+
         return payment;
     }
+
+    @Override
     public void withdraw(double amount) {
-        if (creditLimit + getBalance() >= amount) {
+        if (amount <= creditLimit + getBalance()) {
             setBalance(getBalance() - amount);
         }
     }
+
+    @Override
     public String toString() {
         return "\n" + super.toString() +
                 String.format("\nInterest Rate: %.2f%%", apr * 100) +
@@ -140,17 +154,17 @@ public class TestAccounts {
         // Creates array of accounts
         Account accounts[] = new Account[5];
 
-        accounts[0] = new Account(1066, 7500);
-        accounts[1] = new SavingsAccount(30507, 4500, .015);
-        accounts[2] = new CreditCardAccount(51782737, 7000, .08, 1000);
-        accounts[3] = new CreditCardAccount(629553328, 1500, .075, 5000);
-        accounts[4] = new CreditCardAccount(4977201043L, -5000, .07, 10000);
+        accounts[0] = new Account(1066L, 7500.0);
+        accounts[1] = new SavingsAccount(30507L, 4500.0, 0.015);
+        accounts[2] = new CreditCardAccount(51782737L, 7000.0, 0.08, 1000);
+        accounts[3] = new CreditCardAccount(629553328L, 1500.0, 0.075, 5000);
+        accounts[4] = new CreditCardAccount(4977201043L, -5000.0, 0.07, 10000);
 
         // Deposits/withdraws amounts and prints from all objects in array
         for (int i = 0; i < accounts.length; i++) {
 
-            accounts[i].deposit(2134);
-            accounts[i].withdraw(4782);
+            accounts[i].deposit(2134.0);
+            accounts[i].withdraw(4782.0);
 
             System.out.print(accounts[i]);
 
