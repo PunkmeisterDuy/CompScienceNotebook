@@ -113,6 +113,7 @@ class CreditCardAccount extends Account {
         this.apr = apr;
     }
 
+    // Functions for calculating payment/withdrawing/formatting
     public double calculatePayment() {
         double payment = 0;
 
@@ -156,6 +157,5 @@ public class TestAccounts {
             System.out.print(accounts[i]);
             System.out.println();
         }
-
     }
 }
