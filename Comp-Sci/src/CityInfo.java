@@ -1,17 +1,17 @@
 /*
  * Duy Nguyen
  * CityInfo.java
- *
+ * Reads cities from files and calculates statistics from country code
  */
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.PrintWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
+// Creates individual city object
 class City {
 
     private String country;
@@ -45,8 +45,10 @@ class City {
 
 }
 
+// Gets city info from files
 public class CityInfo {
 
+    // Reads city file lines that have proper format
     public static ArrayList<City> readCityFile(File fileName) throws FileNotFoundException {
 
         Scanner file = new Scanner(fileName);
@@ -54,7 +56,6 @@ public class CityInfo {
 
         while (file.hasNextLine()) {
 
-            System.out.println(file.nextLine());
             String line = file.nextLine();
             String [] properties = line.split(";");
 
@@ -64,30 +65,93 @@ public class CityInfo {
             }
             else {
                 try {
-                    City city = new City(properties[0], properties[1], Integer.parseInt(properties[2]));
+                    cityList.add(new City (
+                            properties[0],
+                            properties[1],
+                            Integer.valueOf(properties[2])));
                 }
-                catch (InputMismatchException ex) {
-                    System.out.println("Inputs are not correct data type");
+                catch (NumberFormatException ex) {
+                    System.out.printf("\"%s\" does not have correct data type(s). \n", line);
                 }
             }
-            //Scanner input = new Scanner(file.nextLine());
-            //for (int strings = 0; strings < 2; strings++) {
-            //    City city = new City(file.next(), file.next(), file.nextInt());
-            //    cityList.add(city);
-            //}
         }
-        return cityList;
 
+        file.close();
+        return cityList;
     }
 
+    public static int statistics(String countryCode, ArrayList<City> cityList) {
+
+        countryCode.toUpperCase();
+        int cities = 0;
+        double avgPopulation = 0;
+
+        for (int i = 0; i < cityList.size(); i++) {
+                if (cityList.get(i).getCountry().equals(countryCode)) {
+                    cities++;
+                    avgPopulation += cityList.get(i).getPopulation();
+                }
+        }
+
+        if (cities != 0) {
+            avgPopulation /= cities;
+            System.out.printf("Average Population: %.2f\n", avgPopulation);
+            System.out.printf("Number of cities: %d\n", cities);
+        }
+        else {
+            System.out.println("No cities found\n");
+        }
+
+        return cities;
+    }
+
+    public static void writeCountryFile(String countryCode,
+                                        ArrayList<City> cityList) {
+
+        String fileName = countryCode + ".dat";
+        File file = new File(fileName);
+
+        try (PrintWriter writer = new PrintWriter(file)) {
+            for (int i = 0; i < cityList.size(); i++) {
+                if (cityList.get(i).getCountry().equals(countryCode)) {
+                    writer.println(cityList.get(i));
+                }
+            }
+            System.out.printf("File saved as %s\n\n", fileName);
+        }
+        catch (IOException ex) {
+            System.out.printf("Error writing %s\n\n", fileName);
+            System.out.println(ex.getMessage());
+        }
+
+
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
-        City sanJose = new City("US", "San Jose", 1000000);
-        System.out.println(sanJose);
 
         File cities = new File("citylist.dat");
-        readCityFile(cities);
-        System.out.println();
-    }
+        boolean exit = false;
 
+        System.out.println("Reading city file ...");
+        ArrayList<City> cityList = readCityFile(cities);
+
+        System.out.println(); // Formatting
+
+        while (!exit) {
+
+            Scanner input = new Scanner(System.in);
+            System.out.printf("Enter a two-letter country code, or press Enter to quit: ");
+            String countryCode = input.nextLine();
+
+            if (countryCode.equals("")) {
+                exit = true;
+            }
+            else {
+                if (statistics(countryCode, cityList) > 0) {
+                    writeCountryFile(countryCode, cityList);
+                }
+            }
+        }
+
+    }
 }
