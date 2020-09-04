@@ -1,1 +1,1 @@
-# CompScience75
+# CompScienceNotebook
