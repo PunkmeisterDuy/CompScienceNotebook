@@ -2,7 +2,8 @@ package Comsc76.C13;
 /*
  * Duy Nguyen
  * TestGeometricObjects.java
- * Asks about triangle properties, calculates triangle's area/perimeter, and outputs properties
+ * Asks about triangle properties then outputs area, perimeter, color,
+ * and if the triangle, a circle, and a rectangle are filled
  */
 
 import java.util.Scanner;
@@ -10,9 +11,12 @@ import java.util.Scanner;
 public class TestGeometricObjects {
     public static void main(String[] args) {
 
+        // takes input from console
+        Scanner input = new Scanner(System.in);
+
+
         Triangle triangle = new Triangle();
 
-        Scanner input = new Scanner(System.in);
         // asks for triangle side input in prompt loop for valid triangle
         while (!triangle.isValidTriangle()) {
             System.out.print("Enter sides of a valid triangle: ");
@@ -29,8 +33,20 @@ public class TestGeometricObjects {
         System.out.print("Is triangle filled (true/false): ");
         triangle.setFilled(input.nextBoolean());
 
-        Circle circle = new Circle(6);
+
+
+        // Prints triangle properties
+        System.out.println(triangle.toString());
+
+        // Prints circle properties with radius of 6,
+        // color purple, and filled
+        Circle circle = new Circle(6, "purple", true);
         System.out.println(circle.toString());
+
+        // Prints rectangle properties with width of 10, height of 20,
+        // color blue, and filled
+        Rectangle rectangle = new Rectangle(10, 20, "blue", true);
+        System.out.println(rectangle.toString());
 
 
 
@@ -38,42 +54,83 @@ public class TestGeometricObjects {
 }
 
 class Triangle extends GeometricObject {
-    int[] triangleSides = new int[3];
-    double area;
-    double perimeter;
+    private int[] triangleSides = new int[3];
+    private double area;
+    private double perimeter;
 
-    @Override
-    public double getArea() {
-        return 0;
+    Triangle() { //constructors in Triangle class are not used, but for standard practice
+        for (int i = 0; i < 3; i++) {
+            triangleSides[i] = 0;
+        }
+        getArea();
+        getPerimeter();
     }
 
-    @Override
+    Triangle(int a, int b, int c) { // a,b,c to conform to mathematical formulas
+        triangleSides[0] = a;
+        triangleSides[1] = b;
+        triangleSides[2] = c;
+
+        getArea();
+        getPerimeter();
+    }
+
+    Triangle(int a, int b, int c, String color) {
+        triangleSides[0] = a;
+        triangleSides[1] = b;
+        triangleSides[2] = c;
+
+        getArea();
+        getPerimeter();
+        setColor(color);
+    }
+
+    Triangle(int a, int b, int c, boolean filled) {
+        triangleSides[0] = a;
+        triangleSides[1] = b;
+        triangleSides[2] = c;
+
+        getArea();
+        getPerimeter();
+        setFilled(filled);
+    }
+
+    Triangle(int a, int b, int c, String color, boolean filled) {
+        triangleSides[0] = a;
+        triangleSides[1] = b;
+        triangleSides[2] = c;
+
+        getArea();
+        getPerimeter();
+        setColor(color);
+        setFilled(filled);
+    }
+
+    public double getArea() {
+        // Heron's formula
+        int a = triangleSides[0];
+        int b = triangleSides[1];
+        int c = triangleSides[2];
+        double s = getPerimeter() / 2;
+
+        // i don't know if this is bad practice to use a getter to update the instance
+        area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+        return area;
+    }
+
     public double getPerimeter() {
-        return 0;
+        int a = triangleSides[0];
+        int b = triangleSides[1];
+        int c = triangleSides[2];
+
+        perimeter = a + b + c;
+        return perimeter;
     }
 
     void setTrigangleSide(int side, int index) {
         triangleSides[index] = side;
     }
 
-    double calculateArea() {
-        // Heron's formula
-        int a = triangleSides[0];
-        int b = triangleSides[1];
-        int c = triangleSides[2];
-        double s = calculatePerimeter() / 2;
-
-        area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
-        return area;
-    }
-
-    double calculatePerimeter() {
-        int a = triangleSides[0];
-        int b = triangleSides[1];
-        int c = triangleSides[2];
-        perimeter = a + b + c;
-        return perimeter;
-    }
 
     boolean isValidTriangle() {
 
@@ -89,66 +146,149 @@ class Triangle extends GeometricObject {
     }
 
     public String toString() {
-        return "dumb";
+        return "\nTriangle: " +
+                "\nArea: " + Math.floor(getArea() * 100) / 100 +
+                "\nPerimeter: " + Math.floor(getPerimeter() * 100) / 100 +
+                "\nColor: " + getColor() +
+                "\nFilled: " + isFilled();
     }
 }
 
 class Circle extends GeometricObject{
-    int radius;
-    double area;
-    double perimeter;
+    private int radius;
+    private double area;
+    private double perimeter;
+
+    Circle() {
+        radius = 0;
+        area = 0;
+        perimeter = 0;
+    }
 
     Circle(int radius) {
         this.radius = radius;
-        calculateArea(radius);
-        calculatePerimeter(radius);
+        getArea();
+        getPerimeter();
     }
 
-    @Override
+    Circle(int radius, String color) {
+        this.radius = radius;
+        getArea();
+        getPerimeter();
+        setColor(color);
+    }
+
+    Circle(int radius, boolean filled) {
+        this.radius = radius;
+        getArea();
+        getPerimeter();
+        setFilled(filled);
+    }
+
+    Circle(int radius, String color, boolean filled) {
+        this.radius = radius;
+        getArea();
+        getPerimeter();
+        setColor(color);
+        setFilled(filled);
+    }
+
     public double getArea() {
-        return area;
-    }
-
-    @Override
-    public double getPerimeter() {
-        return perimeter;
-    }
-
-    double calculateArea(int radius) {
         area = (Math.PI) * (radius^2);
         return area;
     }
 
-    double calculatePerimeter(int radius) {
-        perimeter = (Math.PI) * (2 * radius);
-        return radius;
+    public double getPerimeter() {
+        perimeter = (2 * Math.PI * radius);
+        return perimeter;
+    }
+
+    private void setRadius(int radius) {
+        this.radius = radius;
     }
 
     public String toString() {
-        return "Circle: \n" + "Circle Area: " + getArea() + "\nCircle Perimeter: " + getPerimeter();
+        return "\nCircle: " +
+                "\nArea: " + Math.floor(getArea() * 100) / 100 +
+                "\nPerimeter: " + Math.floor(getPerimeter() * 100) / 100 +
+                "\nColor: " + getColor() +
+                "\nFilled: " + isFilled();
     }
 }
 
 class Rectangle extends GeometricObject{
-    int[] sides = new int[4];
-    double area;
-    double perimeter;
+    private int width;
+    private int height;
+    private double area;
+    private double perimeter;
 
     Rectangle() {
+        width = 0;
+        height = 0;
+        area = 0;
+        perimeter = 0;
     }
 
-    @Override
+    Rectangle(int width, int height) {
+        this.width = width;
+        this.height = height;
+
+        area = getArea();
+        perimeter = getPerimeter();
+    }
+
+    Rectangle(int width, int height, String color) {
+        this.width = width;
+        this.height = height;
+        setColor(color);
+
+        area = getArea();
+        perimeter = getPerimeter();
+    }
+
+    Rectangle(int width, int height, boolean filled) {
+        this.width = width;
+        this.height = height;
+        setFilled(filled);
+
+        area = getArea();
+        perimeter = getPerimeter();
+    }
+
+    Rectangle(int width, int height, String color, boolean filled) {
+        this.width = width;
+        this.height = height;
+        setColor(color);
+        setFilled(filled);
+
+        area = getArea();
+        perimeter = getPerimeter();
+    }
+
     public double getArea() {
-        return 0;
+        area = height * width;
+        return area;
     }
 
-    @Override
     public double getPerimeter() {
-        return 0;
+        perimeter = (2 * height) + (2 * width);
+        return perimeter;
+    }
+
+    private void setWidth(int width) {
+        this.width = width;
+    }
+
+    private void setHeight(int height) {
+        this.height = height;
     }
 
     public String toString() {
-        return "Rectangle: \n" + "Rectangle Area: " + getArea() + "\nRectangle Perimeter: " + getPerimeter();
+        return "\nRectangle: " +
+                "\nArea: " + getArea() +
+                "\nPerimeter: " + getPerimeter() +
+                "\nColor: " + getColor() +
+                "\nFilled: " + isFilled();
     }
 }
 
