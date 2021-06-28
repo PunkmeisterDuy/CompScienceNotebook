@@ -12,4 +12,9 @@ import java.util.TreeMap;
 public class CountOccurrenceOfWords {
 
     Map<String, Integer> map = new TreeMap<>();
+
+    public static void main(String[] args) {
+        System.out.println("test");
+
+    }
 }
