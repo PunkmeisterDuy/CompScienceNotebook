@@ -1,4 +1,4 @@
-package Comsc76.C13;
+package Comsc076.C13;
 /*
  * Duy Nguyen
  * TestGeometricObjects.java
