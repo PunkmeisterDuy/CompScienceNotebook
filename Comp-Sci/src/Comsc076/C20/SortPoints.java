@@ -32,8 +32,6 @@ public class SortPoints {
         points[4] = new Point(3, 4);
          */
 
-
-
         // sorts new array by x
         Point[] pointsSortedX = points.clone();
         Arrays.sort(pointsSortedX);
@@ -81,7 +79,10 @@ class Point implements Comparable<Point> {
 
     // compares x if x is greater or less than,
     // compares y if x coordinate is equal
-    @Override
+    //
+
+
+
     public int compareTo(Point point) {
         if (this.x > point.x) {
             return 1;
