@@ -154,68 +154,6 @@ class Triangle extends GeometricObject {
     }
 }
 
-class Circle extends GeometricObject{
-    private int radius;
-    private double area;
-    private double perimeter;
-
-    Circle() {
-        radius = 0;
-        area = 0;
-        perimeter = 0;
-    }
-
-    Circle(int radius) {
-        this.radius = radius;
-        getArea();
-        getPerimeter();
-    }
-
-    Circle(int radius, String color) {
-        this.radius = radius;
-        getArea();
-        getPerimeter();
-        setColor(color);
-    }
-
-    Circle(int radius, boolean filled) {
-        this.radius = radius;
-        getArea();
-        getPerimeter();
-        setFilled(filled);
-    }
-
-    Circle(int radius, String color, boolean filled) {
-        this.radius = radius;
-        getArea();
-        getPerimeter();
-        setColor(color);
-        setFilled(filled);
-    }
-
-    public double getArea() {
-        area = (Math.PI) * (radius^2);
-        return area;
-    }
-
-    public double getPerimeter() {
-        perimeter = (2 * Math.PI * radius);
-        return perimeter;
-    }
-
-    private void setRadius(int radius) {
-        this.radius = radius;
-    }
-
-    public String toString() {
-        return "\nCircle: " +
-                "\nArea: " + Math.floor(getArea() * 100) / 100 +
-                "\nPerimeter: " + Math.floor(getPerimeter() * 100) / 100 +
-                "\nColor: " + getColor() +
-                "\nFilled: " + isFilled();
-    }
-}
-
 class Rectangle extends GeometricObject{
     private int width;
     private int height;
@@ -287,6 +225,68 @@ class Rectangle extends GeometricObject{
         return "\nRectangle: " +
                 "\nArea: " + getArea() +
                 "\nPerimeter: " + getPerimeter() +
+                "\nColor: " + getColor() +
+                "\nFilled: " + isFilled();
+    }
+}
+
+class Circle extends GeometricObject {
+    private int radius;
+    private double area;
+    private double perimeter;
+
+    Circle() {
+        radius = 0;
+        area = 0;
+        perimeter = 0;
+    }
+
+    public Circle(int radius) {
+        this.radius = radius;
+        getArea();
+        getPerimeter();
+    }
+
+    Circle(int radius, String color) {
+        this.radius = radius;
+        getArea();
+        getPerimeter();
+        setColor(color);
+    }
+
+    Circle(int radius, boolean filled) {
+        this.radius = radius;
+        getArea();
+        getPerimeter();
+        setFilled(filled);
+    }
+
+    Circle(int radius, String color, boolean filled) {
+        this.radius = radius;
+        getArea();
+        getPerimeter();
+        setColor(color);
+        setFilled(filled);
+    }
+
+    public double getArea() {
+        area = (Math.PI) * (radius ^ 2);
+        return area;
+    }
+
+    public double getPerimeter() {
+        perimeter = (2 * Math.PI * radius);
+        return perimeter;
+    }
+
+    private void setRadius(int radius) {
+        this.radius = radius;
+    }
+
+    public String toString() {
+        return "\nCircle: " +
+                "\nArea: " + Math.floor(getArea() * 100) / 100 +
+                "\nPerimeter: " + Math.floor(getPerimeter() * 100) / 100 +
                 "\nColor: " + getColor() +
                 "\nFilled: " + isFilled();
     }
